@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+@section scripts{
+<script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+<script src="http://localhost:59570/signalr/hubs"></script>
+
+<script>
+    $.connection.hub.url = "http://localhost:59570/signalr";
+
+    var dispatchHub = $.connection.testHub;
+    $(function () {
+
+        dispatchHub.client.closeChild = function () {
+            alert("Signal received");
+        };
+
+        $.connection.hub.start().done(function () {
+            dispatchHub.server.addEncounterGroup("ABC");
+        });
+    });
+
+</script>
+}
+
